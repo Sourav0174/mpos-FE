@@ -14,7 +14,7 @@ class DashboardScreen extends ConsumerWidget {
         title: shopProfileAsync.when(
           data: (profile) => Text(profile?.name ?? 'Dashboard'),
           loading: () => const Text('Loading...'),
-          error: (_, __) => const Text('Error'),
+          error: (error, stack) => const Text('Error'),
         ),
       ),
       body: Center(

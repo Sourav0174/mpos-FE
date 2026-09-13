@@ -1,12 +1,12 @@
 import 'package:drift/drift.dart';
 import 'package:uuid/uuid.dart';
 
-const _uuid = Uuid();
+const uuid = Uuid();
 
 /// Base table containing all the audit fields required by the Core Engineering Rules.
 /// Every table inheriting from this will automatically get UUIDs, timestamps, and sync tracking.
 abstract class BaseTable extends Table {
-  TextColumn get id => text().clientDefault(() => _uuid.v4())(); // UUID v4, generated at insert
+  TextColumn get id => text().clientDefault(() => uuid.v4())(); // UUID v4, generated at insert
   DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
   DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
   BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();

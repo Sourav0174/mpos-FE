@@ -27,7 +27,7 @@ class AppTheme {
       ),
       
       // Cards: Soft borders, no heavy shadows
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: AppColors.surfaceLight,
         elevation: 0,
         shape: RoundedRectangleBorder(
@@ -91,7 +91,7 @@ class AppTheme {
         centerTitle: false,
       ),
       
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: AppColors.surfaceDark,
         elevation: 0,
         shape: RoundedRectangleBorder(

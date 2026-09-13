@@ -17,7 +17,7 @@ class $ShopProfilesTable extends ShopProfiles
     false,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
-    clientDefault: () => _uuid.v4(),
+    clientDefault: () => uuid.v4(),
   );
   static const VerificationMeta _createdAtMeta = const VerificationMeta(
     'createdAt',
@@ -467,7 +467,7 @@ class $ProductsTable extends Products with TableInfo<$ProductsTable, Product> {
     false,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
-    clientDefault: () => _uuid.v4(),
+    clientDefault: () => uuid.v4(),
   );
   static const VerificationMeta _createdAtMeta = const VerificationMeta(
     'createdAt',
@@ -1030,7 +1030,7 @@ class $BillsTable extends Bills with TableInfo<$BillsTable, Bill> {
     false,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
-    clientDefault: () => _uuid.v4(),
+    clientDefault: () => uuid.v4(),
   );
   static const VerificationMeta _createdAtMeta = const VerificationMeta(
     'createdAt',
@@ -1546,7 +1546,7 @@ class $BillItemsTable extends BillItems
     false,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
-    clientDefault: () => _uuid.v4(),
+    clientDefault: () => uuid.v4(),
   );
   static const VerificationMeta _createdAtMeta = const VerificationMeta(
     'createdAt',
