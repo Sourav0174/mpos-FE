@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../auth/shop_profile_repository.dart';
+import '../products/product_list_screen.dart';
 
 class DashboardScreen extends ConsumerWidget {
   const DashboardScreen({super.key});
@@ -35,9 +36,12 @@ class DashboardScreen extends ConsumerWidget {
             const SizedBox(height: 32),
             ElevatedButton(
               onPressed: () {
-                // TODO: Navigate to Billing / Add Product
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const ProductListScreen()),
+                );
               },
-              child: const Text('Start Billing (Coming Soon)'),
+              child: const Text('Manage Products'),
             ),
           ],
         ),
