@@ -16,7 +16,9 @@ These rules apply to all code generated and modified in this project. As an AI a
 ## Development Workflow
 - **Mandatory Reading Before Building**: Before starting work on any feature or milestone, you MUST read and understand the following documents:
   1. `docs/Core Engineering Rules & Principles.txt` - to ensure the work complies with all structural and quality requirements.
-  2. `docs/Implementation_Specs.md` - to understand the flow, schema, and detailed specifications for the current milestone (e.g., Milestone 0, Milestone 1).
+  2. `docs/Implementation_Specs.md` - to understand the flow, schema, and detailed specifications for the current milestone.
+- **Verification & Zero-Breakage Policy**: Before concluding a turn or committing code, you MUST run `flutter analyze` or attempt a test build to ensure no broken imports, undefined variables, or generator failures were introduced.
+- **State Management**: Use classic Riverpod Providers (e.g., `Provider`, `NotifierProvider`, `FutureProvider`) rather than `riverpod_generator` annotations. This prevents silent failures in `build_runner` that lead to ungenerated `.g.dart` files and broken code.
 
 ## UI/UX & Design Philosophy
 - **Modern UI/UX**: The Flutter app must have a highly modern, polished look and feel, inspired by the structural and UX patterns of the `apisense` project. While colors may differ, the structural quality, spacing, and interaction design should match that standard.
