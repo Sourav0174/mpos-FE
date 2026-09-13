@@ -1,0 +1,54 @@
+Technology Stack & Architecture Standards
+1. Overview & Core Philosophy
+This document establishes the official technology stack, libraries, and architectural conventions for the mPOS application. All choices are aligned with the principles defined in Core Engineering Rules & Principles and support the milestones outlined in the MVP Roadmap.
+2. Confirmed Technology Stack
+Mobile Application
+	•	Framework & Language: Flutter + Dart
+	•	Architecture Pattern: Clean Architecture with feature-first modularization (features/billing, features/products, features/inventory, etc.)
+	•	State Management: Riverpod (flutter_riverpod with code generation / riverpod_annotation)
+	•	Local Persistence & Database: Drift (SQLite wrapper) with type-safe schemas, reactive DAOs, and ACID transactions
+	•	Barcode Detection: mobile_scanner (Google ML Kit on-device barcode scanning, hardware-accelerated, zero network dependency)
+	•	Thermal Printing: ESC/POS protocol using esc_pos_utils_plus for command/ticket byte formatting and print_bluetooth_thermal / flutter_blue_plus for Bluetooth connectivity
+	•	Local Key-Value Storage: flutter_secure_storage for auth tokens and shared_preferences for non-sensitive local settings
+Backend & Cloud Infrastructure
+	•	Backend Framework: FastAPI (Python 3.11+) with asynchronous request handling
+	•	Production Database: PostgreSQL (with JSONB support for sync payloads)
+	•	API Protocol: RESTful JSON endpoints over HTTPS
+	•	Authentication & Security: JWT access tokens + rotating refresh tokens
+	•	Sync Idempotency Standard: Header X-Idempotency-Key: <UUID> required on all transactional sync submissions
+	•	Containerization & Hosting: Docker + AWS (ECS / EC2 / RDS PostgreSQL)
+3. Layer Separation & Folder Structure Standard (Mobile)
+lib/
+
+├── core/
+
+│   ├── database/        # Drift database definition, tables, DAOs, migrations
+
+│   ├── network/         # HTTP client, interceptors, error handling
+
+│   ├── theme/           # App colors, typography, high-contrast POS styles
+
+│   └── utils/           # UUID generators, formatters, hardware helpers
+
+├── features/
+
+│   ├── auth/            # Shop login, credentials, token persistence
+
+│   ├── products/        # Catalog, 3-field product entry, barcode lookup
+
+│   ├── billing/         # Continuous scan, cart state, fast-checkout flow
+
+│   ├── payments/        # Cash, UPI, Card, Split payment handlers
+
+│   ├── receipts/        # ESC/POS byte generator, printer dispatch, WhatsApp
+
+│   ├── inventory/       # Stock tracking, low-stock alerts, adjustment logs
+
+│   └── sync/            # Offline sync queue, background worker, conflict logic
+
+└── main.dart
+4. Integration Guidelines & Safeguards
+	•	Local Database Isolation: UI widgets must never query the Drift database directly; all access flows through Repository interfaces and Riverpod providers.
+	•	Hardware Decoupling: Printer and scanner drivers must implement domain interfaces (e.g., BarcodeScannerService, ReceiptPrinterService) so physical devices can be mocked in unit/widget tests.
+	•	Sync Resilience: Network layer must never throw unhandled exceptions to the UI layer; all network interactions must be encapsulated in Result/Either types with automatic fallback to local storage.
+

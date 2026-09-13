@@ -1,0 +1,151 @@
+MVP Milestones
+🎯 Milestone 0 — Product Foundation
+Goal: Define exactly what we're building.
+
+	•	App architecture
+	•	Authentication / shop account
+	•	Shop profile
+	•	Local database
+	•	Basic navigation
+	•	Design system
+	•	Online/offline data strategy
+	•	Backend/API foundation
+
+Done when: A user can create/open their shop and reach the billing workflow.
+📦 Milestone 1 — Product Management
+Goal: Make product setup extremely fast.
+
+Core:
+
+	•	Add product
+	•	Product name
+	•	Barcode
+	•	Selling price
+	•	Opening stock
+	•	Edit product
+	•	Delete product
+	•	Product list
+	•	Search products
+	•	Product details
+
+Most importantly:
+
+	•	Scan barcode → if product exists → automatically load it.
+	•	If it doesn't exist: Scan → Name + Price + Stock → Done
+	•	This follows the document's three-field setup concept.
+
+Done when: A shop owner can prepare their initial catalogue without dealing with complicated POS fields.
+📷 Milestone 2 — Ultra-Fast Billing
+This is the heart of the MVP.
+
+Build:
+
+	•	Camera barcode scanner
+	•	Continuous scanning
+	•	Product automatically added
+	•	Quantity
+	•	Increase/decrease quantity
+	•	Remove item
+	•	Running total
+	•	Recent products
+	•	Favorites/quick products
+	•	Very fast scan feedback
+
+Target workflow:
+
+	•	Scan → vibration/beep → item added → immediately ready for next scan.
+	•	The document specifically describes this as the differentiating "Ultra Fast Billing Mode."
+
+Done when: You can realistically bill a normal multi-item customer in <30 seconds.
+💰 Milestone 3 — Payment
+Goal: Finish the transaction.
+
+Support:
+
+	•	Cash
+	•	UPI
+	•	Card
+	•	Split payment
+	•	Payment confirmation
+	•	Bill completion
+	•	Automatic stock deduction
+
+The document explicitly lists Cash, UPI, Card and Split Payment.
+
+Done when: A completed bill correctly updates sales + inventory.
+🧾 Milestone 4 — Receipt
+Goal: Give the customer proof of purchase.
+
+MVP:
+
+	•	Digital receipt
+	•	WhatsApp/share receipt
+	•	Printable receipt
+	•	Bluetooth thermal printer support
+
+The source specifically proposes WhatsApp and printing as the post-payment flow.
+
+Done when: Customer can receive the bill without the cashier leaving the billing flow.
+📊 Milestone 5 — Simple Dashboard
+Don't build analytics yet.
+
+Only:
+
+	•	Today's Sales
+	•	Today's Bills
+	•	Stock Alerts
+
+And:
+
+	•	[ New Bill ]
+
+That's essentially the dashboard proposed in the document.
+
+Done when: Opening the app immediately tells the owner what matters today.
+📦 Milestone 6 — Basic Inventory
+Only the inventory functionality necessary for billing:
+
+	•	Current stock
+	•	Stock deduction after sale
+	•	Low-stock threshold
+	•	Low-stock alerts
+	•	Quick product edit
+	•	Stock adjustment
+
+The document specifically calls out low-stock alerts and quick product editing.
+
+Done when: The owner can trust the stock number after every sale.
+📴 Milestone 7 — Offline-First Reliability
+I would consider this MVP-critical, not a future feature.
+
+The source explicitly says:
+
+	•	Internet goes → billing continues → sync later.
+	•	And notes that without this, many shops won't trust the app.
+
+Build:
+
+	•	Local product database
+	•	Local billing
+	•	Local transactions
+	•	Offline stock updates
+	•	Sync queue
+	•	Automatic synchronization when online
+	•	Conflict handling
+
+Done when: You can turn off the internet and still complete a sale.
+🧪 Milestone 8 — Real-Shop Validation
+Before adding fancy features: Put it in the hands of actual small-shop users.
+
+Test:
+
+	•	Product setup time
+	•	Billing speed
+	•	Barcode accuracy
+	•	Payment flow
+	•	Receipt flow
+	•	Offline behaviour
+	•	Printer reliability
+	•	Ease of learning
+
+The success criterion should be: Can a shop owner who has never used billing software create their first bill within ~10 minutes?

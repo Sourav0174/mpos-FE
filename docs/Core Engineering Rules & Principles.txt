@@ -1,0 +1,39 @@
+Core Engineering Rules & Principles
+1. Purpose & Milestone Design Protocol
+Before designing or implementing any milestone from the MVP Roadmap, all architecture, database schemas, and workflows must be verified against this document.
+The 3-Step Milestone Design Flow:
+	•	Read Core Rules: Review the non-negotiable architectural guardrails defined here.
+	•	Review Future Roadmap: Check the MVP Roadmap (Milestones 0 through 8) to identify upstream and downstream dependencies.
+	•	Design & Implement Milestone: Formulate the technical design and database schema for the current milestone, confirming zero conflict with future milestones.
+2. The Non-Negotiable Core Rules
+Rule 1: Offline-First by Default
+	•	Local Autonomy: Core POS functions (scanning, adding products, cart updates, billing, receipts) must never wait on or require network connectivity.
+	•	Local DB as Single Source of Truth: All reads and writes during the checkout flow execute against the local embedded database.
+	•	Async Synchronization: Network requests (cloud backup, syncing) must run as background asynchronous tasks without interrupting the user.
+Rule 2: Future-Proof Data Standards (Milestone 7 Ready)
+To ensure seamless multi-device synchronization and avoid painful schema refactoring later:
+
+	•	UUID Primary Keys: Every entity (products, bills, bill_items, payments, inventory_logs) must use client-generated UUID v4 strings as primary keys. Auto-incrementing integers (1, 2, 3) are strictly prohibited.
+	•	Audit Timestamps: Every table must include created_at (UTC ISO 8601) and updated_at (UTC ISO 8601).
+	•	Soft Deletes: Records must never be hard-deleted locally if they need to be synchronized. Use an is_deleted boolean flag and deleted_at timestamp.
+	•	Sync Tracking: Every record must track sync_status (synced, pending, failed) and a local version or timestamp for conflict resolution.
+Rule 3: Speed & Response Time Benchmarks (Milestone 2 Ready)
+	•	Sub-30-Second Billing: The entire checkout cycle for a multi-item customer must be achievable in under 30 seconds.
+	•	Indexed Lookups: Product lookups by barcode must use an indexed database field and return in <50ms.
+	•	Non-Blocking Scanner: The continuous camera scanning feed and barcode detection pipeline must run off the main UI thread to prevent stutter or frame drops.
+	•	Instant Feedback: Barcode recognition must provide immediate sensory confirmation (haptic vibration and audio chime) and prepare immediately for the next scan.
+Rule 4: Transaction & Data Integrity (Milestones 3, 5, 6 Ready)
+	•	Decoupled Billing & Payment: Keep bills (order summary and item lines) structurally distinct from payments (tender records). This ensures native support for split payments (Cash + UPI + Card) in Milestone 3.
+	•	Atomic Checkout Transactions: Bill completion, payment capture, and inventory deduction must execute inside a single local database transaction. If any step fails, the entire transaction rolls back.
+	•	Immutable Inventory Logs: Never merely overwrite stock totals. Record every stock movement as a delta log entry (quantity_change, reason, reference_id) alongside the current stock balance.
+Rule 5: Peripheral & Hardware Abstraction (Milestone 4 Ready)
+	•	Decoupled Receipt Generation: Separate receipt data formatting from the transmission mechanism.
+	•	Modular Output Targets: The receipt service must support multiple pluggable output handlers (ESC/POS thermal printer commands, PDF generation, WhatsApp sharing) without altering core billing logic.
+Rule 6: Forward-Compatibility Verification Checklist
+When completing the design for any milestone, run this quick audit:
+
+	•	Does this schema require modifying existing tables in a way that breaks existing local data?
+	•	Are all new tables equipped with UUID primary keys and audit timestamps?
+	•	Does any new flow introduce a synchronous network dependency?
+	•	Is this design compatible with the requirements of Milestones 2 through 8 in the MVP Roadmap?
+
