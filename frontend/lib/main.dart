@@ -4,7 +4,7 @@ import 'core/theme/app_theme.dart';
 import 'core/theme/theme_provider.dart';
 import 'features/auth/shop_profile_repository.dart';
 import 'features/auth/shop_setup_screen.dart';
-import 'features/dashboard/dashboard_screen.dart';
+import 'features/dashboard/main_layout_screen.dart';
 
 void main() {
   runApp(
@@ -36,7 +36,7 @@ class MPOSApp extends ConsumerWidget {
               if (profile == null) {
                 return const ShopSetupScreen();
               }
-              return const DashboardScreen();
+              return const MainLayoutScreen();
             },
             loading: () => const Scaffold(
               body: Center(child: CircularProgressIndicator()),
